@@ -44,7 +44,6 @@ public class TodoController {
     }
 
     // DELETE - by ID mit OK oder wenn es nicht existiert, NOT FOUND aus
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable String id) {
         return service.deleteTodo(id);
