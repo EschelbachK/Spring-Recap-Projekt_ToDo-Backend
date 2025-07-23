@@ -1,6 +1,6 @@
-package repository;
+package org.example.springrecapprojekt_todobackend.repository;
 
-import model.Todo;
+import org.example.springrecapprojekt_todobackend.model.Todo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

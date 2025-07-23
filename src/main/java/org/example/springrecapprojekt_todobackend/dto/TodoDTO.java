@@ -1,5 +1,5 @@
-package dto;
+package org.example.springrecapprojekt_todobackend.dto;
 
-import model.TodoStatus;
+import org.example.springrecapprojekt_todobackend.model.TodoStatus;
 
 public record TodoDTO(String description,TodoStatus status) {}

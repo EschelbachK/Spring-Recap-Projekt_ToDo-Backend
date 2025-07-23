@@ -1,4 +1,4 @@
-package service;
+package org.example.springrecapprojekt_todobackend.service;
 
 import org.springframework.stereotype.Service;
 

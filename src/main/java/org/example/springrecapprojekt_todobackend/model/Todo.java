@@ -1,4 +1,4 @@
-package model;
+package org.example.springrecapprojekt_todobackend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
