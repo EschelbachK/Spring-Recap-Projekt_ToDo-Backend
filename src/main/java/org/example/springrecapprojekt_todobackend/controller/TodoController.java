@@ -17,32 +17,27 @@ public class TodoController {
     public TodoController(TodoService service) {
         this.service = service;
     }
-
     // GET ALL - Alle gespeicherten Todos sollen in einer Liste zurückgeben werden
     @GetMapping
     public List<Todo> getAllTodos() {
         return service .getAllTodos();
     }
-
     // GETBYID - inklusive <Optional> Prüfung
     @GetMapping("/{id}")
     public ResponseEntity<Todo> getTodoById(@PathVariable String id) {
         return service.getTodoById(id);
     }
-
     // POST - TodoDTO mit generate UUID, nur Description und Status
     @PostMapping
     public Todo createTodo(@RequestBody TodoDTO todoDTO) {
         return service.createTodo(todoDTO);
     }
-
     // PUT - Updated bestehendes mit OK oder wenn es nicht existiert, NOT FOUND aus
     // Das <Optional> wird aus dem MongoRepoInterface vererbt
     @PutMapping("/{id}")
     public ResponseEntity<Todo> updateTodo(@PathVariable String id, @RequestBody TodoDTO updatedTodoDTO) {
         return service.updateTodo(id, updatedTodoDTO);
     }
-
     // DELETE - by ID mit OK oder wenn es nicht existiert, NOT FOUND aus
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable String id) {
