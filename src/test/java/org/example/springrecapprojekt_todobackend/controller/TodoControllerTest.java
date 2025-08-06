@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.example.springrecapprojekt_todobackend.model.TodoStatus.OPEN;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.web.servlet.function.RequestPredicates.contentType;
@@ -109,5 +111,14 @@ class TodoControllerTest {
                 "status": "OPEN"
                 }
       """));
+    }
+
+    @Test
+    void getTodoById_Test_thenStatus404() throws Exception {
+        //GIVEN
+        //WHEN
+        mockMvc.perform(get("/api/todo/1"))
+        //THEN
+                .andExpect(status().isNotFound());
     }
 }
