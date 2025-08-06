@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class TodoService {
@@ -21,10 +22,9 @@ public class TodoService {
     public List<Todo> getAllTodos() {
         return repo.findAll();
     }
-    public ResponseEntity<Todo> getTodoById(String id) {
+    public Todo getTodoById(String id) {
         return repo.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new NoSuchElementException("Todo with id " + id + " not found"));
     }
     public Todo createTodo(TodoDTO todoDTO) {
         Todo todo = new Todo(

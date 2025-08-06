@@ -24,7 +24,7 @@ public class TodoController {
     }
     // GETBYID - inklusive <Optional> Prüfung
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getTodoById(@PathVariable String id) {
+    public Todo getTodoById(@PathVariable String id) {
         return service.getTodoById(id);
     }
     // POST - TodoDTO mit generate UUID, nur Description und Status

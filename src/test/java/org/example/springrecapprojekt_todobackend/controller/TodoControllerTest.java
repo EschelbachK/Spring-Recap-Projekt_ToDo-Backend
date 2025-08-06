@@ -1,5 +1,6 @@
 package org.example.springrecapprojekt_todobackend.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.springrecapprojekt_todobackend.model.Todo;
 import org.example.springrecapprojekt_todobackend.repository.TodoRepo;
 import org.junit.jupiter.api.Test;
@@ -12,11 +13,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.example.springrecapprojekt_todobackend.model.TodoStatus.OPEN;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.web.servlet.function.RequestPredicates.contentType;
 
+@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 class TodoControllerTest {
@@ -30,7 +31,7 @@ class TodoControllerTest {
     void getAllTodos() throws Exception {
         //GIVEN
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/todo"))
+        mockMvc.perform(get("/api/todo"))
         //THEN
                 .andExpect(status().isOk())
                 .andExpect(content().json ("""
@@ -90,5 +91,23 @@ class TodoControllerTest {
                   "status": "IN_PROGRESS"
               }
               """));
+    }
+    @Test
+    @DirtiesContext
+    void getById() throws Exception {
+        //GIVEN
+        Todo existingTodo = new Todo("1", "test-description", OPEN);
+        todoRepo.save(existingTodo);
+        //WHEN
+        mockMvc.perform(get("/api/todo/1"))
+        //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                {
+                "id": "1",
+                "description": "test-description",
+                "status": "OPEN"
+                }
+      """));
     }
 }

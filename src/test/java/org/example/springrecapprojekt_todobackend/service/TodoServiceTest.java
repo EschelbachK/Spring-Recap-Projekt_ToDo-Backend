@@ -8,6 +8,8 @@ import org.mockito.Mockito;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.example.springrecapprojekt_todobackend.model.TodoStatus.IN_PROGRESS;
 import static org.example.springrecapprojekt_todobackend.model.TodoStatus.OPEN;
@@ -28,7 +30,7 @@ class TodoServiceTest {
         Todo t1 = new Todo("1", "Auto", OPEN);
         Todo t2 = new Todo("1", "Auto", OPEN);
         Todo t3 = new Todo("1", "Auto", OPEN);
-        List <Todo> todos = List.of(t1, t2, t3);
+        List<Todo> todos = List.of(t1, t2, t3);
         when(todoRepo.findAll()).thenReturn(todos);
         //WHEN
         List<Todo> actual = todoService.getAllTodos();
@@ -72,5 +74,28 @@ class TodoServiceTest {
         // THEN
         verify(todoRepo).save(expectedTodo);
         assertEquals(expectedTodo, actual);
+    }
+    @Test
+    void getTodoById_Test_whenValidId_ThenReturnTodo() {
+        //GIVEN
+        String id = "1";
+        Todo todo = new Todo("1", "test-description", OPEN);
+        when(todoRepo.findById(id)).thenReturn(Optional.of(todo));
+        //WHEN
+        Todo actual = todoService.getTodoById(id);
+        //THEN
+        verify(todoRepo).findById(id);
+        assertEquals(todo, actual);
+    }
+
+    @Test
+    void getTodoById_Test_whenInvalidId_ThenReturnException() {
+        //GIVEN
+        String id = "1";
+        when(todoRepo.findById(id)).thenReturn(Optional.empty());
+        //WHEN
+        assertThrows(NoSuchElementException.class, () -> todoService.getTodoById(id));
+        //THEN
+        verify(todoRepo).findById(id);
     }
 }
