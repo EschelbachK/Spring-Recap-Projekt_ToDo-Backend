@@ -5,9 +5,11 @@ import org.example.springrecapprojekt_todobackend.model.Todo;
 import org.example.springrecapprojekt_todobackend.repository.TodoRepo;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.List;
 
+import static org.example.springrecapprojekt_todobackend.model.TodoStatus.IN_PROGRESS;
 import static org.example.springrecapprojekt_todobackend.model.TodoStatus.OPEN;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -55,6 +57,20 @@ class TodoServiceTest {
         // Prüfen, dass todoRepo.save() genau mit expectedTodo aufgerufen wurde
         verify(todoRepo).save(expectedTodo);
         // THEN: Prüfen, ob das zurückgegebene Todo genau dem expectedTodo entspricht
+        assertEquals(expectedTodo, actual);
+    }
+
+    @Test
+    void updateTodo() {
+        // GIVEN
+        String id = "123";
+        TodoDTO dto = new TodoDTO("Haus", OPEN);
+        Todo expectedTodo = new Todo(id, "Haus", OPEN);
+        when(todoRepo.save(expectedTodo)).thenReturn(expectedTodo);
+        // WHEN
+        Todo actual = todoService.updateTodo(id, dto);
+        // THEN
+        verify(todoRepo).save(expectedTodo);
         assertEquals(expectedTodo, actual);
     }
 }

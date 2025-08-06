@@ -32,12 +32,12 @@ public class TodoController {
     public Todo createTodo(@RequestBody TodoDTO todoDTO) {
         return service.createTodo(todoDTO);
     }
-    // PUT - Updated bestehendes mit OK oder wenn es nicht existiert, NOT FOUND aus
-    // Das <Optional> wird aus dem MongoRepoInterface vererbt
+    // PUT
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable String id, @RequestBody TodoDTO updatedTodoDTO) {
+    public Todo updateTodo(@PathVariable String id, @RequestBody TodoDTO updatedTodoDTO) {
         return service.updateTodo(id, updatedTodoDTO);
     }
+
     // DELETE - by ID mit OK oder wenn es nicht existiert, NOT FOUND aus
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable String id) {

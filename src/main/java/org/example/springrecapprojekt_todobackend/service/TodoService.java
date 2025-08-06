@@ -34,16 +34,11 @@ public class TodoService {
         );
         return repo.save(todo);
     }
-    public ResponseEntity<Todo> updateTodo(String id, TodoDTO updatedTodoDTO) {
-        return repo.findById(id)
-                .map(existingTodo -> {
-                    existingTodo.setDescription(updatedTodoDTO.description());
-                    existingTodo.setStatus(updatedTodoDTO.status());
-                    repo.save(existingTodo);
-                    return ResponseEntity.ok(existingTodo);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public Todo updateTodo(String id, TodoDTO updatedTodoDTO) {
+        Todo todoToUpdate = new Todo(id,  updatedTodoDTO.description(), updatedTodoDTO.status());
+        return  repo.save(todoToUpdate);
     }
+
     public ResponseEntity<Void> deleteTodo(String id) {
         if (repo.existsById(id)) {
             repo.deleteById(id);
