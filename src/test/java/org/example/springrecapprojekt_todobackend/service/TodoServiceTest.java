@@ -14,8 +14,7 @@ import java.util.Optional;
 import static org.example.springrecapprojekt_todobackend.model.TodoStatus.IN_PROGRESS;
 import static org.example.springrecapprojekt_todobackend.model.TodoStatus.OPEN;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class TodoServiceTest {
 
@@ -97,5 +96,16 @@ class TodoServiceTest {
         assertThrows(NoSuchElementException.class, () -> todoService.getTodoById(id));
         //THEN
         verify(todoRepo).findById(id);
+    }
+
+    @Test
+    void deleteTodoById() {
+        //GIVEN
+        String id = "123";
+        doNothing().when(todoRepo).deleteById(id);
+        //WHEN
+        todoService.deleteTodo(id);
+        //THEN
+        verify(todoRepo).deleteById(id);
     }
 }

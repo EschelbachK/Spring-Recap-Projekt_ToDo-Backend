@@ -3,7 +3,6 @@ package org.example.springrecapprojekt_todobackend.service;
 import org.example.springrecapprojekt_todobackend.dto.TodoDTO;
 import org.example.springrecapprojekt_todobackend.model.Todo;
 import org.example.springrecapprojekt_todobackend.repository.TodoRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +17,7 @@ public class TodoService {
     public TodoService(TodoRepo repo, IdService idService) {
         this.repo = repo;
         this.idService = idService;
+
     }
     public List<Todo> getAllTodos() {
         return repo.findAll();
@@ -39,12 +39,7 @@ public class TodoService {
         return  repo.save(todoToUpdate);
     }
 
-    public ResponseEntity<Void> deleteTodo(String id) {
-        if (repo.existsById(id)) {
-            repo.deleteById(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public void deleteTodo(String id) {
+      repo.deleteById(id);
     }
 }

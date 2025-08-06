@@ -3,7 +3,6 @@ package org.example.springrecapprojekt_todobackend.controller;
 import org.example.springrecapprojekt_todobackend.dto.TodoDTO;
 import org.example.springrecapprojekt_todobackend.model.Todo;
 import org.example.springrecapprojekt_todobackend.service.TodoService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +39,7 @@ public class TodoController {
 
     // DELETE - by ID mit OK oder wenn es nicht existiert, NOT FOUND aus
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTodo(@PathVariable String id) {
-        return service.deleteTodo(id);
+    public void deleteTodo(@PathVariable String id) {
+        service.deleteTodo(id);
     }
 }
